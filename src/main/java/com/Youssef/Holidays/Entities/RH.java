@@ -1,9 +1,11 @@
 package com.Youssef.Holidays.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,6 @@ public class RH {
     @GeneratedValue
     private Long RHId;
 
-    @OneToMany(mappedBy = "rh", fetch = FetchType.LAZY)
-    private List<ChefDepart> chefDeparts = new ArrayList<>();
+    @OneToMany
+    private List<Holiday> holidays = new ArrayList<>();
 }

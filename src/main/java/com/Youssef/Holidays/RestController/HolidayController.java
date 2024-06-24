@@ -19,7 +19,7 @@ public class HolidayController {
 
 
 
-    @GetMapping
+    @GetMapping("/allHolidays")
     public List<Holiday> getHolidays(){
         return holidayService.getAllHolidays();
     }
@@ -31,8 +31,8 @@ public class HolidayController {
 
 
     @PostMapping
-    public Holiday createHoliday(@RequestBody Holiday holiday) throws Exception{
-            return holidayService.saveHoliday(holiday);
+    public void createHoliday(@RequestBody Holiday holiday) throws Exception{
+            holidayService.saveHoliday(holiday);
     }
 
     @DeleteMapping("/{id}")

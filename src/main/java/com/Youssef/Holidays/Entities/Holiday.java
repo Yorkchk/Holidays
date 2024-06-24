@@ -1,10 +1,11 @@
 package com.Youssef.Holidays.Entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Valid
 public class Holiday {
 
     @Id
@@ -33,4 +35,10 @@ public class Holiday {
 
     @ManyToOne
     private Employee employee;
+
+    @ManyToOne
+    private ChefDepart chefDepart;
+
+    @ManyToOne
+    private RH rh;
 }

@@ -23,11 +23,9 @@ public class Employee {
 
     private String LastName;
 
-    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    @OneToMany
     private List<Holiday> holidays = new ArrayList<>();
 
-    @ManyToOne
-    private ChefDepart chefDepart;
 
 //    @Column(name = "ChefDepartId", nullable = false)
 //    private Long chefDepartId;

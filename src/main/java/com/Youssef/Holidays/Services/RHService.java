@@ -33,21 +33,34 @@ public class RHService implements RHInter {
         return rhRepo.findAll();
     }
 
-    public Holiday postHolidayToRH( HolidayDTO holidayDTO) throws Exception {
+    public void postHolidayToRH( HolidayDTO holidayDTO) throws Exception {
         try {
-            if (holidayDTO.getStatusCD() != Status.Validated) {
+            if (holidayService.getHolidayById(holidayDTO.getHolyId()).getStatusCD() != Status.Validated) {
                 throw new Exception();
             }
-            if (holidayDTO.getStatusRH() == Status.Rejected) {
+            else if (holidayDTO.getStatus() == Status.InProgress) {
+                throw new RuntimeException();
+            }
+            else if (holidayDTO.getStatus() == Status.Rejected) {
                 holidayService.deleteHolidayById(holidayDTO.getHolyId());
                 System.out.println("Holiday declined by RH");
-                return holidayService.getHolidayById(holidayDTO.getHolyId());
+//                return holidayService.getHolidayById(holidayDTO.getHolyId());
             }
-            System.out.println("Validated by RH");
-            holidayService.saveHoliday(holidayService.getHolidayById(holidayDTO.getHolyId()));
-        } catch (Exception e) {
+            else {
+                System.out.println("Validated by RH");
+                Holiday holiday = holidayService.getHolidayById(holidayDTO.getHolyId());
+                holiday.setStatusRH(Status.Validated);
+                holidayService.saveHoliday(holiday);
+                System.out.println("The holiday is validated");
+
+            }
+        }
+        catch(RuntimeException e){
+            System.out.println("The status can either be Validated or Rejected");
+        }
+        catch (Exception e) {
             System.out.println("Chef Departement needs to validate the holiday");
         }
-        return holidayService.getHolidayById(holidayDTO.getHolyId());
+//        return holidayService.getHolidayById(holidayDTO.getHolyId());
     }
 }

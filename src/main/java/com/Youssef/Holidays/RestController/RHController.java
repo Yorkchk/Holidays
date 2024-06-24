@@ -28,8 +28,8 @@ public class RHController {
     }
 
     @PostMapping
-    public Holiday postHolidayToRH(@RequestBody HolidayDTO holidayDTO) throws Exception {
-        return rhService.postHolidayToRH(holidayDTO);
+    public void postHolidayToRH(@RequestBody HolidayDTO holidayDTO) throws Exception {
+        rhService.postHolidayToRH(holidayDTO);
     }
 
     @GetMapping

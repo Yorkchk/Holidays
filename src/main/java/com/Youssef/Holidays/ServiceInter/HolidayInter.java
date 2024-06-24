@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface HolidayInter {
 
-    Holiday saveHoliday(Holiday holiday) throws Exception;
+    void saveHoliday(Holiday holiday) throws Exception;
 
     void deleteHolidayById(Long id);
 

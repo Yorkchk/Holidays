@@ -20,8 +20,8 @@ public class ChefDepartController {
     private ChefDepartService chefDepartService;
 
     @PostMapping
-    public Holiday postHolidayToCD(@RequestBody HolidayDTO holidayDTO) throws Exception{
-        return chefDepartService.postHolidayToCD(holidayDTO);
+    public void postHolidayToCD(@RequestBody HolidayDTO holidayDTO) throws Exception{
+        chefDepartService.postHolidayToCD(holidayDTO);
     }
 
     @PostMapping("/createCD")

@@ -15,8 +15,6 @@ public class EmployeeService implements EmployeeInter {
     @Autowired
     private EmployeeRepo employeeRepo;
 
-    @Autowired
-    private ChefDepartService chefDepartService;
 
     public Employee saveEmployee(Employee employee) throws Exception{
         return employeeRepo.save(employee);

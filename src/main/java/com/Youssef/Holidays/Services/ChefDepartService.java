@@ -34,21 +34,31 @@ public class ChefDepartService implements ChefDepartInter {
         return chefDepartRepo.findAll();
     }
 
-    public Holiday postHolidayToCD(HolidayDTO holidayDTO) throws Exception{
+    public void postHolidayToCD(HolidayDTO holidayDTO) throws Exception{
         try {
-            if (holidayDTO.getStatusCD() == Status.InProgress) {
+            if (holidayDTO.getStatus() != Status.Validated && holidayDTO.getStatus() != Status.Rejected) {
                 throw new Exception();
-            } else if (holidayDTO.getStatusCD() == Status.Rejected) {
+            }
+            else if (holidayService.getHolidayById(holidayDTO.getHolyId()) == null){
+                throw new RuntimeException();
+            }
+            else if (holidayDTO.getStatus() == Status.Rejected) {
                 holidayService.deleteHolidayById(holidayDTO.getHolyId());
                 System.out.println("Holiday declined by chef departement");
-                return holidayService.getHolidayById(holidayDTO.getHolyId());
             }
-            holidayService.saveHoliday(holidayService.getHolidayById(holidayDTO.getHolyId()));
-            System.out.println("Validated by Chef Departement");
+            else {
+                Holiday holiday = holidayService.getHolidayById(holidayDTO.getHolyId());
+                holiday.setStatusCD(Status.Validated);
+                holidayService.saveHoliday(holiday);
+                System.out.println("Validated by Chef Departement");
+            }
+        }
+        catch(RuntimeException e){
+            System.out.println("This employee does not exist");
         }
         catch(Exception e){
             System.out.println("the status can either be Validated or Rejected");
         }
-        return holidayService.getHolidayById(holidayDTO.getHolyId());
+//        return holidayService.getHolidayById(holidayDTO.getHolyId());
     }
 }

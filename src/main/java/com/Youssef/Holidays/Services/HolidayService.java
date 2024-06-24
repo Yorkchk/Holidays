@@ -2,6 +2,7 @@ package com.Youssef.Holidays.Services;
 
 import com.Youssef.Holidays.Entities.Holiday;
 import com.Youssef.Holidays.Entities.HolidayDTO;
+import com.Youssef.Holidays.Exception.DateException;
 import com.Youssef.Holidays.Repositories.HolidayRepo;
 import com.Youssef.Holidays.ServiceInter.HolidayInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,15 @@ public class HolidayService implements HolidayInter {
     private HolidayRepo holidayRepo;
 
 
-    public Holiday saveHoliday(Holiday holiday) throws Exception {
-        try {
-            if (holiday.getStartDate().after(holiday.getEndDate())) {
-                throw new Exception();
-            }
-            return holidayRepo.save(holiday);
+    public void saveHoliday(Holiday holiday) throws Exception {
+    try {
+        if (holiday.getStartDate().after(holiday.getEndDate())) {
+            throw new DateException("The end date cannot be before the start date");
         }
-        catch(Exception e){
-            System.out.println("This employee does not exist");
-        }
-        return holiday;
+        holidayRepo.save(holiday);
+    }
+    catch(DateException e){}
+
     }
 
     public void deleteHolidayById(Long id){
