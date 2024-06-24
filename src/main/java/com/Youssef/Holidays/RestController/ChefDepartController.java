@@ -29,7 +29,7 @@ public class ChefDepartController {
         return chefDepartService.saveChefDepart(chefDepart);
     }
 
-    @GetMapping("/getCD")
+    @GetMapping
     public List<ChefDepart> getChefDeparts(){
         return chefDepartService.getAllChefDepart();
     }

@@ -19,7 +19,7 @@ public class HolidayController {
 
 
 
-    @GetMapping("/allHolidays")
+    @GetMapping
     public List<Holiday> getHolidays(){
         return holidayService.getAllHolidays();
     }

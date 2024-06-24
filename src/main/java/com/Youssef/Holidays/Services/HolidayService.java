@@ -2,7 +2,6 @@ package com.Youssef.Holidays.Services;
 
 import com.Youssef.Holidays.Entities.Holiday;
 import com.Youssef.Holidays.Entities.HolidayDTO;
-import com.Youssef.Holidays.Exception.DateException;
 import com.Youssef.Holidays.Repositories.HolidayRepo;
 import com.Youssef.Holidays.ServiceInter.HolidayInter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,13 @@ public class HolidayService implements HolidayInter {
     public void saveHoliday(Holiday holiday) throws Exception {
     try {
         if (holiday.getStartDate().after(holiday.getEndDate())) {
-            throw new DateException("The end date cannot be before the start date");
+            throw new Exception();
         }
         holidayRepo.save(holiday);
     }
-    catch(DateException e){}
+    catch(Exception e){
+        System.out.println("The end date can not be before the start date");
+    }
 
     }
 
