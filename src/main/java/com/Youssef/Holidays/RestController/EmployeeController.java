@@ -17,14 +17,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private HolidayService holidayService;
-
-    @PostMapping
-    public String postHoliday(@RequestBody Holiday holiday) throws Exception{
-        holidayService.saveHoliday(holiday);
-        return "redirect:/ChefDepart";
-    }
 
     @GetMapping(path="/allEmployees")
     public List<Employee> getAllEmployees(){

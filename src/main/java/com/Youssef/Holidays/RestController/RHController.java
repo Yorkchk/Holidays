@@ -1,6 +1,7 @@
 package com.Youssef.Holidays.RestController;
 
 import com.Youssef.Holidays.Entities.Holiday;
+import com.Youssef.Holidays.Entities.HolidayDTO;
 import com.Youssef.Holidays.Entities.RH;
 import com.Youssef.Holidays.Entities.Status;
 import com.Youssef.Holidays.Services.HolidayService;
@@ -27,22 +28,8 @@ public class RHController {
     }
 
     @PostMapping
-    public Holiday postHolidayToRH(@RequestBody Holiday holiday) throws Exception {
-        try {
-            if (holiday.getStatusCD() != Status.Validated) {
-                throw new Exception();
-            }
-            if (holiday.getStatusRH() == Status.Rejected) {
-                holidayService.deleteHolidayById(holiday.getHolyId());
-                System.out.println("Holiday declined by RH");
-                return holiday;
-            }
-            System.out.println("Validated by RH");
-            holidayService.saveHoliday(holiday);
-        } catch (Exception e) {
-            System.out.println("Chef Departement needs to validate the holiday");
-        }
-        return holiday;
+    public Holiday postHolidayToRH(@RequestBody HolidayDTO holidayDTO) throws Exception {
+        return rhService.postHolidayToRH(holidayDTO);
     }
 
     @GetMapping

@@ -23,14 +23,14 @@ public class Employee {
 
     private String LastName;
 
-//    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
-//    private List<Holiday> holidays = new ArrayList<>();
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    private List<Holiday> holidays = new ArrayList<>();
 
-//    @ManyToOne
-//    private ChefDepart chefDepart;
+    @ManyToOne
+    private ChefDepart chefDepart;
 
-    @Column(name = "ChefDepartId", nullable = false)
-    private Long chefDepartId;
+//    @Column(name = "ChefDepartId", nullable = false)
+//    private Long chefDepartId;
 
 
 }

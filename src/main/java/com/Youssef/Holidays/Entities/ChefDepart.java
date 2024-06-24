@@ -19,13 +19,13 @@ public class ChefDepart {
     @GeneratedValue
     private Long ChefDepartId;
 
-//    @ManyToOne
-//    private RH rh;
+    @ManyToOne
+    private RH rh;
 
-    @Column(name = "RHId", nullable = false)
-    private Long rhId;
+//    @Column(name = "RHId", nullable = false)
+//    private Long rhId;
 
-//    @OneToMany(mappedBy = "chefDepart", fetch = FetchType.LAZY)
-//    private List<Employee> employees = new ArrayList<>();
+    @OneToMany(mappedBy = "chefDepart", fetch = FetchType.LAZY)
+    private List<Employee> employees = new ArrayList<>();
 
 }

@@ -28,6 +28,9 @@ public class Holiday {
 
     private Status StatusRH = Status.InProgress;
 
-    @Column(name = "emp_id", nullable = false)
-    private Long empId;
+//    @Column(name = "emp_id", nullable = false)
+//    private Long empId;
+
+    @ManyToOne
+    private Employee employee;
 }

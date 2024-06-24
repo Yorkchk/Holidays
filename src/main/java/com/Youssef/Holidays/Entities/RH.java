@@ -18,6 +18,6 @@ public class RH {
     @GeneratedValue
     private Long RHId;
 
-//    @OneToMany(mappedBy = "rh", fetch = FetchType.LAZY)
-//    private List<ChefDepart> chefDeparts = new ArrayList<>();
+    @OneToMany(mappedBy = "rh", fetch = FetchType.LAZY)
+    private List<ChefDepart> chefDeparts = new ArrayList<>();
 }

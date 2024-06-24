@@ -1,24 +1,24 @@
 package com.Youssef.Holidays.Services;
 
 import com.Youssef.Holidays.Entities.Holiday;
+import com.Youssef.Holidays.Entities.HolidayDTO;
 import com.Youssef.Holidays.Repositories.HolidayRepo;
+import com.Youssef.Holidays.ServiceInter.HolidayInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class HolidayService {
+public class HolidayService implements HolidayInter {
 
     @Autowired
     private HolidayRepo holidayRepo;
 
-    @Autowired
-    private EmployeeService employeeService;
 
     public Holiday saveHoliday(Holiday holiday) throws Exception {
         try {
-            if (employeeService.getEmployeeById(holiday.getEmpId()) == null) {
+            if (holiday.getStartDate().after(holiday.getEndDate())) {
                 throw new Exception();
             }
             return holidayRepo.save(holiday);
@@ -26,7 +26,7 @@ public class HolidayService {
         catch(Exception e){
             System.out.println("This employee does not exist");
         }
-        return null;
+        return holiday;
     }
 
     public void deleteHolidayById(Long id){
@@ -40,4 +40,8 @@ public class HolidayService {
     public List<Holiday> getAllHolidays(){
         return holidayRepo.findAll();
     }
+
+//    private Holiday convertToHoliday(HolidayDTO holidayDTO){
+//        Holiday holiday = new Holiday()
+//    }
 }
