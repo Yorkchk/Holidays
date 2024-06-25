@@ -27,9 +27,14 @@ public class RHController {
         rhService.saveRH(rh);
     }
 
-    @PostMapping
-    public void postHolidayToRH(@RequestBody HolidayDTO holidayDTO) throws Exception {
-        rhService.postHolidayToRH(holidayDTO);
+    @PostMapping("/{id}/Validate")
+    public void validateHolidayToRH(@PathVariable Long id) throws Exception {
+        rhService.validateHolidayToRH(id);
+    }
+
+    @PostMapping("/{id}/Reject")
+    public void rejectHolidayToRH(@PathVariable Long id) throws Exception {
+        rhService.rejectHoliday(id);
     }
 
     @GetMapping

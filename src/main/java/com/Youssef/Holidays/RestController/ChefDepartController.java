@@ -19,10 +19,16 @@ public class ChefDepartController {
     @Autowired
     private ChefDepartService chefDepartService;
 
-    @PostMapping
-    public void postHolidayToCD(@RequestBody HolidayDTO holidayDTO) throws Exception{
-        chefDepartService.postHolidayToCD(holidayDTO);
+    @PostMapping("/{id}/Validate")
+    public void validateHolidayToCD(@PathVariable Long id) throws Exception{
+        chefDepartService.validateHolidayToCD(id);
     }
+
+    @PostMapping("/{id}/Reject")
+    public void rejectHolidayToCD(@PathVariable Long id) throws Exception{
+        chefDepartService.rejectHolidayCD(id);
+    }
+
 
     @PostMapping("/createCD")
     public ChefDepart createChefDepart(@RequestBody ChefDepart chefDepart) throws Exception{

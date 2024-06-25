@@ -33,33 +33,47 @@ public class RHService implements RHInter {
         return rhRepo.findAll();
     }
 
-    public void postHolidayToRH( HolidayDTO holidayDTO) throws Exception {
+    public void rejectHoliday(Long id) throws Exception{
+    try {
+        if (holidayService.getHolidayById(id) == null) {
+            throw new RuntimeException();
+        } else if (holidayService.getHolidayById(id).getStatusCD() != Status.Validated) {
+            throw new Exception();
+        } else {
+            Holiday holiday = holidayService.getHolidayById(id);
+            holiday.setStatusRH(Status.Rejected);
+            holidayService.saveHoliday(holiday);
+            System.out.println("Holiday declined by RH");
+        }
+    }
+    catch(RuntimeException e){
+        System.out.println("the holiday does not exist");
+    }
+    catch(Exception e){
+        System.out.println("the holiday needs to be validated by Chef department before going to RH");
+    }
+    }
+
+    public void validateHolidayToRH( Long id) throws Exception {
         try {
-            if (holidayService.getHolidayById(holidayDTO.getHolyId()).getStatusCD() != Status.Validated) {
-                throw new Exception();
-            }
-            else if (holidayDTO.getStatus() == Status.InProgress) {
+            if (holidayService.getHolidayById(id) == null) {
                 throw new RuntimeException();
-            }
-            else if (holidayDTO.getStatus() == Status.Rejected) {
-                holidayService.deleteHolidayById(holidayDTO.getHolyId());
-                System.out.println("Holiday declined by RH");
-//                return holidayService.getHolidayById(holidayDTO.getHolyId());
+            } else if (holidayService.getHolidayById(id).getStatusCD() != Status.Validated) {
+                throw new Exception();
             }
             else {
                 System.out.println("Validated by RH");
-                Holiday holiday = holidayService.getHolidayById(holidayDTO.getHolyId());
+                Holiday holiday = holidayService.getHolidayById(id);
                 holiday.setStatusRH(Status.Validated);
                 holidayService.saveHoliday(holiday);
                 System.out.println("The holiday is validated");
-
             }
         }
         catch(RuntimeException e){
-            System.out.println("The status can either be Validated or Rejected");
+            System.out.println("the holiday does not exist");
         }
-        catch (Exception e) {
-            System.out.println("Chef Departement needs to validate the holiday");
+        catch(Exception e){
+            System.out.println("the holiday needs to be validated by Chef department before going to RH");
         }
 //        return holidayService.getHolidayById(holidayDTO.getHolyId());
     }

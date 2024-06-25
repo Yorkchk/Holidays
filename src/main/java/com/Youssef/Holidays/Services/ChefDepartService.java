@@ -34,30 +34,36 @@ public class ChefDepartService implements ChefDepartInter {
         return chefDepartRepo.findAll();
     }
 
-    public void postHolidayToCD(HolidayDTO holidayDTO) throws Exception{
+    public void rejectHolidayCD(Long id) throws Exception{
+    try {
+        if (holidayService.getHolidayById(id) == null) {
+            throw new RuntimeException();
+        }
+        Holiday holiday = holidayService.getHolidayById(id);
+        holiday.setStatusCD(Status.Rejected);
+        holidayService.saveHoliday(holiday);
+        System.out.println("Holiday declined by chef departement");
+        }
+    catch(RuntimeException e){
+        System.out.println("This holiday does not exist");
+        }
+    }
+
+    public void validateHolidayToCD(Long id) throws Exception{
         try {
-            if (holidayDTO.getStatus() != Status.Validated && holidayDTO.getStatus() != Status.Rejected) {
-                throw new Exception();
-            }
-            else if (holidayService.getHolidayById(holidayDTO.getHolyId()) == null){
+            if (holidayService.getHolidayById(id) == null){
                 throw new RuntimeException();
             }
-            else if (holidayDTO.getStatus() == Status.Rejected) {
-                holidayService.deleteHolidayById(holidayDTO.getHolyId());
-                System.out.println("Holiday declined by chef departement");
-            }
+
             else {
-                Holiday holiday = holidayService.getHolidayById(holidayDTO.getHolyId());
+                Holiday holiday = holidayService.getHolidayById(id);
                 holiday.setStatusCD(Status.Validated);
                 holidayService.saveHoliday(holiday);
                 System.out.println("Validated by Chef Departement");
             }
         }
         catch(RuntimeException e){
-            System.out.println("This employee does not exist");
-        }
-        catch(Exception e){
-            System.out.println("the status can either be Validated or Rejected");
+            System.out.println("The holiday does not exist");
         }
 //        return holidayService.getHolidayById(holidayDTO.getHolyId());
     }
